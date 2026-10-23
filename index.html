@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Helsingin ratikat – opettelukortit</title>
+<style>
+:root{--bg:#e9eff2;--surface:#fff;--surface2:#f2f6f8;--text:#10263d;--muted:#566a7d;--border:#cdd8df;--accent:#0a7a4d;--accent-text:#fff;--accent-soft:#dff1e8;--tip:#fff0b3;--tip-text:#4a3b00;--warn:#fbe3c8;--warn-text:#6b3a05;--good:#0a7a4d;--good-bg:#dff1e8;--bad:#b4411f;--bad-bg:#fbe3da;--focus:#1f6fd1;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0d1824;--surface:#16273a;--surface2:#1c3148;--text:#e8f0f6;--muted:#9db0c1;--border:#2c4560;--accent:#3ec286;--accent-text:#06231a;--accent-soft:#143a2d;--tip:#4a3f12;--tip-text:#ffe9a0;--warn:#4a3015;--warn-text:#ffd7ac;--good:#3ec286;--good-bg:#143a2d;--bad:#ff9a78;--bad-bg:#4a2216;--focus:#7fb5ff;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1824;--surface:#16273a;--surface2:#1c3148;--text:#e8f0f6;--muted:#9db0c1;--border:#2c4560;--accent:#3ec286;--accent-text:#06231a;--accent-soft:#143a2d;--tip:#4a3f12;--tip-text:#ffe9a0;--warn:#4a3015;--warn-text:#ffd7ac;--good:#3ec286;--good-bg:#143a2d;--bad:#ff9a78;--bad-bg:#4a2216;--focus:#7fb5ff;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;font-size:16px;line-height:1.55}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:26px;line-height:1.2;margin:0 0 6px;font-weight:700}
+h2.sub{font-size:19px;margin:22px 0 8px;font-weight:700}
+.lead{margin:0 0 18px;color:var(--muted);max-width:60ch}
+.tabs{display:flex;gap:4px;margin:0 0 18px;border-bottom:2px solid var(--border);overflow-x:auto}
+.tab{font:inherit;font-weight:600;font-size:15px;padding:10px 14px;border:0;background:none;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--text);border-bottom-color:var(--accent)}
+button:focus-visible,select:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.steps{margin:0 0 22px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+.steps p{margin:0 0 6px;font-weight:600}
+.steps ol{margin:0;padding-left:20px;color:var(--muted)}
+.group{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin:0 0 14px}
+.ghead{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:0 0 8px}
+.ghead h2{font-size:19px;margin:0;font-weight:700}
+.ghead span{color:var(--muted);font-size:14px}
+.ghint{background:var(--tip);color:var(--tip-text);border-radius:8px;padding:10px 12px;margin:0 0 12px;font-size:15px}
+.row{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--border)}
+.rows .row:first-child{border-top:0}
+.gcol{margin:-4px 0 12px;font-size:14px;color:var(--muted)}
+.ownin{font:inherit;font-size:15px;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--text);width:100%}
+.rtext{flex:1;min-width:0}
+.rroute{font-weight:600}
+.rvia{color:var(--muted);font-size:14px}
+.rtip{color:var(--muted);font-size:15px;margin-top:2px}
+.badge{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;font-weight:700;flex:none;line-height:1}
+.tag{display:inline-block;font-size:13px;font-weight:600;padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:1px}
+.tag.new,.tag.ok{background:var(--accent-soft);color:var(--accent)}
+.tag.chk{background:var(--warn);color:var(--warn-text)}
+.btn{font:inherit;font-weight:600;font-size:15px;padding:10px 18px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-text)}
+.btn.small{font-size:14px;padding:7px 12px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 14px}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.seg button{font:inherit;font-size:14px;font-weight:600;padding:8px 12px;border:0;background:var(--surface);color:var(--muted);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-text)}
+select{font:inherit;font-size:14px;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text)}
+.progress{height:8px;background:var(--surface);border:1px solid var(--border);border-radius:99px;overflow:hidden;margin:0 0 6px}
+.progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.pcount{font-size:14px;color:var(--muted);margin:0 0 14px}
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 16px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;margin:0 0 12px}
+.prompt{color:var(--muted);font-size:15px}
+.bigroute{font-size:26px;font-weight:700;line-height:1.25;max-width:20ch}
+.opts{display:flex;flex-direction:column;gap:8px;margin:0 0 12px}
+.opts.g2{display:grid;grid-template-columns:1fr 1fr}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 14px;min-height:54px;border:1.5px solid var(--border);background:var(--surface);border-radius:10px;font:inherit;font-size:17px;color:var(--text);cursor:pointer}
+.opt .k{flex:none;width:26px;height:26px;border-radius:6px;background:var(--surface2);display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--muted)}
+.opt[aria-disabled="true"]{pointer-events:none}
+.opt.right{border-color:var(--good);background:var(--good-bg)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.actions{display:flex;gap:10px;margin:12px 0 0;flex-wrap:wrap}
+.actions .btn{flex:1;padding:14px;min-width:140px}
+.hintbox{background:var(--tip);color:var(--tip-text);border-radius:8px;padding:10px 12px;font-size:15px;max-width:44ch;text-align:left}
+.banner{margin:0 0 12px;padding:10px 14px;border-radius:10px;font-weight:700}
+.banner.ok{background:var(--good-bg);color:var(--good)}
+.banner.no{background:var(--bad-bg);color:var(--bad)}
+.banner.info{background:var(--surface2);color:var(--text)}
+.detail{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.sign{background:#0b0b0d;border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:14px;border:3px solid #2a2c31}
+.sign .dest{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#ffb61e;font-size:22px;font-weight:700;line-height:1.2;letter-spacing:.02em;overflow-wrap:anywhere}
+.sign .from{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#c08a1c;font-size:14px;margin-top:2px}
+.chain{list-style:none;margin:6px 0 0 10px;padding:0;border-left:5px solid var(--c)}
+.chain li{position:relative;padding:5px 0 5px 22px;font-size:16px}
+.chain li::before{content:"";position:absolute;left:-12px;top:50%;width:14px;height:14px;margin-top:-7px;border-radius:50%;background:var(--surface);border:4px solid var(--c)}
+.chain li.via{font-size:15px;color:var(--muted)}
+.chain li.via::before{width:10px;height:10px;margin-top:-5px;left:-10px;border-width:3px}
+.chain li.end{font-weight:700}
+.note{font-size:15px;color:var(--muted);margin:0}
+.mnemo{background:var(--tip);color:var(--tip-text);border-radius:10px;padding:12px 14px;font-size:17px;font-weight:600;margin:0}
+.mnemo small{display:block;font-size:13px;font-weight:600;opacity:.8;margin-bottom:2px}
+.done{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px 18px;text-align:center}
+.done .big{font-size:24px;font-weight:700;margin:0 0 6px}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 16px;margin:0 0 14px}
+.panel p{margin:0 0 10px}
+.gstat{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--border);font-size:15px}
+.gstat:first-of-type{border-top:0}
+.foot{margin-top:26px;color:var(--muted);font-size:14px}
+@media (prefers-reduced-motion:no-preference){.detail{animation:turn .25s ease-out}@keyframes turn{from{transform:translateY(8px);opacity:.3}to{transform:none;opacity:1}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Helsingin ratikat</h1>
+<p class="lead">Älä opettele 14 erillistä reittiä. Opettele 6 pientä ryhmää monivalintana. Kun kaikki ryhmät on opeteltu, loppukoe aukeaa.</p>
+<div class="tabs" role="tablist" id="tabs">
+<button class="tab" role="tab" id="t-groups" aria-selected="true" data-tab="groups">Ryhmät</button>
+<button class="tab" role="tab" id="t-cards" aria-selected="false" data-tab="cards">Harjoittele</button>
+<button class="tab" role="tab" id="t-quiz" aria-selected="false" data-tab="quiz">Loppukoe</button>
+</div>
+<section id="v-groups"></section>
+<section id="v-cards" hidden></section>
+<section id="v-quiz" hidden></section>
+<p class="foot">Reitit on tarkistettu HSL:n julkisesta aikatauluaineistosta (GTFS), joka on julkaistu 23.10.2026 ja on voimassa 20.12.2026 asti. Linjat 11 ja 12 alkavat 7.11.2026. Reitit voivat muuttua, joten tarkista ajantasaiset tiedot HSL:n Reittioppaasta.</p>
+</div>
+
+<script>
+var LINES=[
+{n:"1",c:"#00bbe3",dark:1,from:"Käpylä",via:["Sörnäinen","Ooppera","Lasipalatsi"],to:"Eira",note:"Kulkee Mannerheimintien ja Helsinginkadun kautta",tip:"Ykkönen on pystyviiva: pohjoisesta etelään. Käpylä ylhäällä, Eira alhaalla.",g:"muut"},
+{n:"2",c:"#758bc5",from:"Olympiaterminaali",via:["Kauppatori","Lasipalatsi","Ooppera","Pasilan asema"],to:"Messukeskus",note:"Kulkee Aleksanterinkadun ja Töölön kautta",tip:"Kakkosella on kaksi isoa päätä: laivaterminaali ja Messukeskus.",g:"olympia"},
+{n:"3",c:"#7366ae",from:"Olympiaterminaali",via:["Eira","Rautatieasema","Kallio"],to:"Kuusitie (Meilahti)",note:"",tip:"Kolme–Kallio, molemmat K. Kolmonen kulkee Kallion kautta Meilahden Kuusitielle.",g:"olympia"},
+{n:"4",c:"#00a665",from:"Katajanokka",via:["Lasipalatsi","Meilahti"],to:"Munkkiniemi",note:"",tip:"Nelosessa on poikkiviiva: itä–länsi. Katajanokka idässä, Munkkiniemi lännessä.",g:"kataja"},
+{n:"5",c:"#007b41",from:"Katajanokka",via:["Rautatieasema","Kamppi","Ruoholahti"],to:"Jätkäsaari",note:"Jätkäsaaressa Tahitinkatu",tip:"Viitonen ottaa alemman reitin: Kampin ja Ruoholahden kautta Jätkäsaareen.",g:"kataja"},
+{n:"6",c:"#cd3092",from:"Arabia",via:["Sörnäinen","Hakaniemi","Rautatieasema"],to:"Eiranranta",note:"",tip:"Arabiasta lähtee kuusi ja kasi. Kasi on oopperakiikarit, joten kuusi menee suoraan etelään Eiranrantaan.",g:"arabia"},
+{n:"7",c:"#f395bf",dark:1,from:"Länsiterminaali",via:["Kamppi","Hakaniemi","Sörnäinen","Pasilan asema"],to:"Meilahden sairaala",note:"Pitkä kaari keskustan, Hakaniemen ja Pasilan kautta",tip:"Seiska–sairaala, molemmat S. Seiska ajaa Länsisatamasta Meilahden sairaalaan.",g:"lansi"},
+{n:"8",c:"#00a2a7",from:"Arabia",via:["Sörnäinen","Ooppera"],to:"Ruusulankatu",note:"Päätepysäkki Ruusulankatu on poikkeusjärjestely, tavallisesti linja jatkaa Jätkäsaareen",tip:"Kasi on oopperakiikarit (8 näyttää silmälaseilta): kulkee Oopperan ohi Töölön kautta.",g:"arabia"},
+{n:"9",c:"#0087cd",from:"Länsiterminaali",via:["Kamppi","Rautatieasema","Kallio","Pasilan asema"],to:"Ilmala",note:"",tip:"Ysi nousee ilmaan: Ilmala. Pitkä linja etelästä pohjoiseen.",g:"lansi"},
+{n:"10",c:"#63bd58",dark:1,from:"Pikku Huopalahti",via:["Ruskeasuo","Töölö"],to:"Ullanlinna",note:"Päätepysäkki on Tarkk’ampujankatu",tip:"Kymppi kulkee Mannerheimintietä: Pikku Huopalahdesta Töölön kautta Ullanlinnaan.",g:"muut"},
+{n:"11",c:"#f1a436",dark:1,from:"Länsi-Pasila",via:["Pasilan asema","Kalasatama","Sompasaari"],to:"Koirasaaret (Kruunuvuorenranta)",note:"Aloittaa 7.11.2026 Kruunusiltojen kautta",tip:"Yksitoista on kaksi pylvästä: silta. Pasilasta Kalasataman kautta siltaa pitkin Kruunuvuorenrantaan.",g:"ita",nw:1},
+{n:"12",c:"#f6dc00",dark:1,from:"Rautatientori",via:["Hakaniemi","Merihaka","Nihti"],to:"Yliskylän keskusta",note:"Aloittaa 7.11.2026 Kruunusiltojen kautta, Laajasalo",tip:"Kello kaksitoista on ylhäällä: Yliskylä. Rautatientorilta Hakaniemen kautta.",g:"ita",nw:1},
+{n:"13",c:"#d47f52",from:"Nihti",via:["Kalasatama","Pasilan asema"],to:"Ilmala",note:"HSL:n aikatauluaineiston mukaan päätepysäkki on tällä hetkellä Ilmala (aiemmin Länsi-Pasila)",tip:"Kolmetoista on itäinen sivulinja: Nihdistä Kalasataman ja Pasilan kautta Ilmalaan, ei keskustaan. Ilmalaan ajaa myös ysi.",g:"ita"},
+{n:"15",c:"#6b6a62",from:"Itäkeskus",via:[],to:"Keilaniemi",note:"Pikaratikka (Raide-Jokeri), kulkee Helsingin ja Espoon välillä",tip:"Viistoista on Jokeri: pikaratikka, ei kantakaupungissa.",g:"muut"}
+];
+var GROUPS=[
+{id:"olympia",name:"Olympiaterminaali",sub:"linjat 2 ja 3",col:"Värivihje: molemmat ovat sinivioletteja, kakkonen vaaleampi ja kolmonen tummempi.",hint:"Samasta laivasatamasta kaksi linjaa: kakkonen Töölön kautta Messukeskukselle, kolmonen Kallion kautta Meilahden Kuusitielle."},
+{id:"kataja",name:"Katajanokka",sub:"linjat 4 ja 5",col:"Värivihje: molemmat ovat vihreitä, nelonen vaaleampi ja viitonen tummempi.",hint:"Sama päätepysäkki, kaksi suuntaa: nelonen Töölön kautta Munkkiniemeen, viitonen Kampin kautta Jätkäsaareen."},
+{id:"arabia",name:"Arabia",sub:"linjat 6 ja 8",col:"Värivihje: kuusi on magenta, kasi turkoosi.",hint:"Arabiasta lähtee kuusi ja kasi. Kuusi menee suoraan etelään Eiranrantaan, kasi kiertää Töölön kautta (tavallisesti Jätkäsaareen asti)."},
+{id:"lansi",name:"Länsiterminaali",sub:"linjat 7 ja 9",col:"Värivihje: seiska on vaaleanpunainen, ysi sininen.",hint:"Samalta päätepysäkiltä: seiska sairaalaan (S–S) Meilahteen, ysi ilmaan (Ilmala) Kallion kautta."},
+{id:"ita",name:"Itä: Kalasatama ja Kruunusillat",sub:"linjat 11, 12 ja 13",col:"Värivihje: kaikki ovat lämpimiä sävyjä: yksitoista oranssi, kaksitoista keltainen, kolmetoista ruskehtava.",hint:"Kaikki kulkevat idässä. Kolmetoista on lyhyt Nihti–Ilmala, yksitoista ja kaksitoista ylittävät uudet sillat Laajasaloon (alkavat 7.11.2026)."},
+{id:"muut",name:"Yksinäiset",sub:"linjat 1, 10 ja 15",col:"Värivihje: ykkönen on syaani, kymppi vaaleanvihreä. Viistoista ei ole kantakaupungin kartalla, joten sen harmaa väri on oma valintani.",hint:"Ykkönen on pystyviiva Käpylästä Eiraan, kymppi kulkee Mannerheimintietä Pikku Huopalahdesta Ullanlinnaan ja viistoista on Jokeri."}
+];
+var BYG={};GROUPS.forEach(function(g){BYG[g.id]=g;});
+function load(k){try{return JSON.parse(localStorage.getItem(k)||"{}")||{};}catch(e){return {};}}
+function store(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+var K1="ratikkakortit-osaan-v2",K2="ratikkakortit-virheet-v2",K3="ratikkakortit-paras-v2",K4="ratikkakortit-putki-v2",K5="ratikkakortit-omat-v2";
+var known=load(K1),miss=load(K2),best=load(K3),streak=load(K4),own=load(K5);
+function sv(){store(K1,known);store(K2,miss);store(K3,best);store(K4,streak);store(K5,own);}
+function badge(l,s){return '<span class="badge" style="width:'+s+'px;height:'+s+'px;font-size:'+Math.round(s*(l.n.length>1?0.4:0.5))+'px;background:'+l.c+';color:'+(l.dark?'#10263d':'#fff')+'">'+l.n+'</span>';}
+function shortRoute(l){return l.from+" – "+l.to;}
+function tags(l){return l.nw?'<span class="tag new">uusi 7.11.</span>':'';}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function glines(g){return LINES.filter(function(l){return l.g===g.id;});}
+function gdone(g){return glines(g).every(function(l){return known[l.n];});}
+function alldone(){return LINES.every(function(l){return known[l.n];});}
+function rowHTML(l,extra){return '<div class="row">'+badge(l,44)+'<div class="rtext"><div class="rroute">'+shortRoute(l)+tags(l)+(extra||'')+'</div>'+(l.via.length?'<div class="rvia">kautta '+l.via.join(", ")+'</div>':'')+'<div class="rtip">'+l.tip+'</div></div></div>';}
+
+var vg=document.getElementById("v-groups"),vc=document.getElementById("v-cards"),vq=document.getElementById("v-quiz");
+var NEED=2;var S={tab:"groups",mode:"num",group:"all",queue:[],q:null,cr:false,think:true};
+var Z={started:false,done:false,kind:"all",items:[],i:0,score:0,wrong:[],q:null};
+
+function makeOpts(l){
+var c=LINES.filter(function(x){return x.n!==l.n;}).map(function(x){
+var s=(x.g===l.g?3:0)+((x.from===l.from||x.to===l.to||x.from===l.to||x.to===l.from)?2:0)+Math.random()*1.5;return {x:x,s:s};})
+.sort(function(a,b){return b.s-a.s;}).slice(0,3).map(function(o){return o.x;});
+return shuffle(c.concat([l]));}
+function makeQ(l,mode,think){
+var m=mode==="mix"?(Math.random()<.5?"num":"route"):mode;
+return {l:l,mode:m,opts:makeOpts(l),phase:"ask",stage:think?"think":"ask",pick:null,ok:false,hint:false};}
+
+function qHTML(q,o){
+var l=q.l,h='<div class="qcard"'+(q.phase==="result"?' style="border-top:6px solid '+l.c+'"':'')+'>';
+if(q.mode==="num"){h+='<div class="prompt">Mihin tämä ratikka ajaa?</div>'+badge(l,q.phase==="ask"?112:72);}
+else{h+='<div class="prompt">Mikä linja ajaa tämän reitin?</div><div class="bigroute">'+shortRoute(l)+'</div>';}
+if(q.hint&&o.hint)h+='<div class="hintbox">'+BYG[l.g].hint+' '+BYG[l.g].col+'</div>';
+if(q.stage==="think"&&q.phase==="ask"){return h+'</div><p class="note" style="text-align:center">Mieti ensin vastaus itse. Paina sitten väliä tai nappia.</p><div class="actions">'+(o.hint?'<button class="btn" data-act="hint">'+(q.hint?'Piilota vihje':'Vihje')+'</button>':'')+'<button class="btn primary" data-act="options">Näytä vaihtoehdot</button></div>';}
+h+='</div><div class="opts'+(q.mode==="route"?' g2':'')+'" role="group" aria-label="Vaihtoehdot">';
+q.opts.forEach(function(x,i){
+var c="opt";
+if(q.phase==="result"){if(x.n===l.n)c+=" right";else if(i===q.pick)c+=" wrong";}
+h+='<button class="'+c+'" data-act="pick" data-i="'+i+'"'+(q.phase==="result"?' aria-disabled="true" tabindex="-1"':'')+'><span class="k">'+(i+1)+'</span>'+(q.mode==="route"?badge(x,34)+'<span>Linja '+x.n+'</span>':'<span>'+shortRoute(x)+'</span>'+(q.phase==="result"?'<span style="margin-left:auto">'+badge(x,28)+'</span>':''))+'</button>';});
+h+='</div>';
+if(q.phase==="ask"){
+h+='<div class="actions">'+(o.hint?'<button class="btn" data-act="hint">'+(q.hint?'Piilota vihje':'Vihje')+'</button>':'')+'<button class="btn" data-act="reveal">En tiedä, näytä vastaus</button></div><p class="note" style="margin-top:10px">Pikanäppäimet: 1–4 valitsee vaihtoehdon, väli näyttää vastauksen.</p>';
+}else{
+var m=q.pick<0?["info","Tässä oikea vastaus."+(o.cards?" Kortti palaa pakkaan hetken päästä.":"")]:(q.ok?["ok","Oikein!"+(o.cards&&!known[l.n]?" Vielä yksi oikea putkeen, niin linja on hallussa.":"")]:["no","Ei ihan oikein. Oikea vastaus on korostettu."+(o.cards?" Kortti palaa pakkaan hetken päästä.":"")]);
+h+='<p class="banner '+m[0]+'" id="banner" role="status">'+m[1]+'</p>';
+h+='<div class="detail"><div class="sign">'+badge(l,56)+'<div><div class="dest">'+l.to+'</div><div class="from">alkaen '+l.from+'</div></div></div>';
+h+='<ul class="chain" style="--c:'+l.c+'"><li class="end">'+l.from+'</li>'+l.via.map(function(v){return '<li class="via">'+v+'</li>';}).join("")+'<li class="end">'+l.to+'</li></ul>';
+if(l.note)h+='<p class="note">'+l.note+'</p>';
+h+='<p class="mnemo"><small>Muistisääntö</small>'+l.tip+'</p>'+(own[l.n]?'<p class="mnemo"><small>Oma muistisääntösi</small>'+esc(own[l.n])+'</p>':'')+'<label class="note" for="own">Keksi oma muistisääntö (tallentuu tähän selaimeen):</label><input id="own" class="ownin" data-n="'+l.n+'" maxlength="140" value="'+esc(own[l.n]||"")+'"></div>';
+h+='<div class="actions"><button class="btn primary" id="nextbtn" data-act="next">'+o.next+'</button></div>';}
+return h;}
+
+function pool(){return LINES.filter(function(l){return S.group==="all"||l.g===S.group;});}
+function prepare(){S.q=S.queue.length?makeQ(S.queue[0],S.mode,S.think):null;}
+function build(){S.queue=shuffle(pool().filter(function(l){return !known[l.n];}));prepare();}
+
+function renderGroups(){
+var nd=GROUPS.filter(gdone).length;
+var h='<div class="steps"><p>Näin opit nopeimmin</p><ol><li>Lue ryhmä kerrallaan. Linjat on ryhmitelty yhteisen päätepysäkin tai alueen mukaan.</li><li>Harjoittele ryhmä monivalintana, kunnes jokainen linja menee oikein kaksi kertaa peräkkäin.</li><li>Kun kaikki '+GROUPS.length+' ryhmää ovat valmiita, loppukoe aukeaa.</li></ol><p class="note" style="margin-top:10px">Ryhmiä valmiina: <b>'+nd+' / '+GROUPS.length+'</b></p></div>';
+GROUPS.forEach(function(g,gi){
+h+='<div class="group"><div class="ghead"><h2>'+(gi+1)+'. '+g.name+'</h2><span>'+g.sub+'</span><span style="display:inline-flex;gap:4px">'+glines(g).map(function(l){return badge(l,20);}).join("")+'</span>'+(gdone(g)?'<span class="tag ok" style="margin:0">valmis</span>':'')+'</div><p class="ghint">'+g.hint+'</p><p class="gcol">'+g.col+'</p><div class="rows">';
+glines(g).forEach(function(l){h+=rowHTML(l,known[l.n]?'<span class="tag ok">osaan</span>':'');});
+h+='</div><div style="margin-top:12px"><button class="btn small primary" data-act="practice" data-g="'+g.id+'">'+(gdone(g)?'Kertaa ryhmä':'Harjoittele tämä ryhmä')+'</button></div></div>';});
+h+='<p><button class="btn small" data-act="resetall">'+(S.cr?'Varmista: nollaa kaikki edistyminen':'Nollaa edistyminen')+'</button></p>';
+vg.innerHTML=h;}
+
+function renderCards(){
+var p=pool(),done=p.filter(function(l){return known[l.n];}).length,pct=p.length?Math.round(done/p.length*100):0;
+var opts='<option value="all">Kaikki ryhmät</option>'+GROUPS.map(function(g){return '<option value="'+g.id+'"'+(S.group===g.id?' selected':'')+'>'+g.name+'</option>';}).join("");
+var M=[["num","Numero → reitti"],["route","Reitti → numero"],["mix","Sekaisin"]];
+var h='<div class="controls"><div class="seg" role="group" aria-label="Suunta">'+M.map(function(m){return '<button data-act="mode" data-m="'+m[0]+'" aria-pressed="'+(S.mode===m[0])+'">'+m[1]+'</button>';}).join("")+'</div><label for="gsel" style="position:absolute;left:-9999px">Ryhmä</label><select id="gsel">'+opts+'</select><button class="btn small" data-act="think">Mieti ensin: '+(S.think?"päällä":"pois")+'</button></div>';
+h+='<div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'"><i style="width:'+pct+'%"></i></div><p class="pcount" aria-live="polite">Osaan '+done+' / '+p.length+'</p>';
+if(!S.q){
+var nxt=null;GROUPS.forEach(function(g){if(!nxt&&!gdone(g))nxt=g;});
+h+='<div class="done">';
+if(alldone()){h+='<p class="big">Kaikki ryhmät valmiina</p><p class="note" style="margin:0 0 16px">Loppukoe on nyt auki.</p><button class="btn primary" data-tab="quiz">Avaa loppukoe</button>';}
+else if(S.group!=="all"&&gdone(BYG[S.group])){h+='<p class="big">Ryhmä valmis</p><p class="note" style="margin:0 0 16px">Hyvä. Jatka seuraavaan ryhmään.</p>'+(nxt?'<button class="btn primary" data-act="practice" data-g="'+nxt.id+'">Seuraava ryhmä: '+nxt.name+'</button>':'');}
+else{h+='<p class="big">Ei kortteja</p><button class="btn primary" data-act="practice" data-g="all">Kaikki ryhmät</button>';}
+h+='</div>';
+}else{h+=qHTML(S.q,{hint:true,cards:true,next:"Seuraava"});}
+vc.innerHTML=h;}
+
+function startQuiz(kind){
+var w=Z.wrong.slice(),ls;
+if(kind==="hard")ls=LINES.filter(function(l){return miss[l.n]>0;}).sort(function(a,b){return miss[b.n]-miss[a.n];}).slice(0,14);
+else if(kind==="wrong")ls=w;else ls=LINES.slice();
+if(!ls.length)ls=LINES.slice();
+Z={started:true,done:false,kind:kind,items:shuffle(ls).map(function(l){return {l:l,mode:Math.random()<.5?"num":"route"};}),i:0,score:0,wrong:[],q:null};
+Z.q=makeQ(Z.items[0].l,Z.items[0].mode);render();window.scrollTo(0,0);}
+function hardest(n){return LINES.filter(function(l){return miss[l.n]>0;}).sort(function(a,b){return miss[b.n]-miss[a.n];}).slice(0,n);}
+
+function renderQuiz(){
+var h='';
+if(!alldone()){
+var nd=GROUPS.filter(gdone).length,nxt=null;GROUPS.forEach(function(g){if(!nxt&&!gdone(g))nxt=g;});
+h+='<div class="panel"><p style="font-size:20px;font-weight:700">Loppukoe on vielä lukittu</p><p class="note">Se aukeaa, kun olet opetellut kaikki ryhmät. Ryhmiä valmiina '+nd+' / '+GROUPS.length+'.</p>';
+GROUPS.forEach(function(g){var k=glines(g).filter(function(l){return known[l.n];}).length;h+='<div class="gstat"><span>'+g.name+'</span><span>'+(gdone(g)?'<span class="tag ok" style="margin:0">valmis</span>':k+' / '+glines(g).length)+'</span></div>';});
+h+='<div style="margin-top:14px"><button class="btn primary" data-act="practice" data-g="'+nxt.id+'">Harjoittele: '+nxt.name+'</button></div></div>';
+}else if(!Z.started){
+var hc=LINES.filter(function(l){return miss[l.n]>0;}).length;
+h+='<div class="panel"><p style="font-size:20px;font-weight:700">Loppukoe</p><p>Yksi kysymys jokaisesta linjasta, molempiin suuntiin. Lopuksi näet yhteenvedon ja vaikeimmat linjasi muistisääntöineen.</p>'+(best.v?'<p class="note">Paras tuloksesi: '+best.v+' / '+LINES.length+'</p>':'')+'<div class="actions"><button class="btn primary" data-act="qstart" data-k="all">Aloita koko koe ('+LINES.length+' kysymystä)</button>'+(hc?'<button class="btn" data-act="qstart" data-k="hard">Vain vaikeimmat ('+Math.min(hc,14)+')</button>':'')+'</div></div>';
+}else if(Z.done){
+var n=Z.items.length,msg=Z.score===n?"Täydellinen. Osaat kaikki linjat.":(Z.score>=n*0.8?"Hyvä tulos. Kertaa vielä alla olevat linjat.":"Kertaa alla olevat linjat ja yritä uudelleen.");
+h+='<div class="done" style="text-align:left"><p class="big">'+Z.score+' / '+n+' oikein</p><p style="margin:0">'+msg+'</p></div>';
+if(Z.wrong.length){h+='<h2 class="sub">Kertaa nämä</h2><div class="panel rows" style="padding-top:6px;padding-bottom:6px">'+Z.wrong.map(function(l){return rowHTML(l);}).join("")+'</div>';}
+var hd=hardest(3);
+if(hd.length){h+='<h2 class="sub">Vaikeimmat linjasi</h2><div class="panel rows" style="padding-top:6px;padding-bottom:6px">'+hd.map(function(l){return rowHTML(l,'<span class="tag chk">väärin '+miss[l.n]+' kertaa</span>');}).join("")+'</div>';}
+h+='<div class="actions"><button class="btn primary" data-act="qstart" data-k="all">Uusi koe</button>'+(Z.wrong.length?'<button class="btn" data-act="qstart" data-k="wrong">Kertaa virheet</button>':'')+'<button class="btn" data-tab="groups">Takaisin ryhmiin</button></div>';
+}else{
+var last=Z.i===Z.items.length-1;
+h+='<div class="controls" style="justify-content:space-between"><span class="pcount" style="margin:0">Kysymys '+(Z.i+1)+' / '+Z.items.length+'</span><span class="pcount" style="margin:0">Oikein: '+Z.score+'</span></div><div class="progress"><i style="width:'+Math.round(Z.i/Z.items.length*100)+'%"></i></div>'+qHTML(Z.q,{hint:false,cards:false,next:last?"Katso tulokset":"Seuraava"});}
+vq.innerHTML=h;}
+
+function updateTabs(){
+["groups","cards","quiz"].forEach(function(t){document.getElementById("t-"+t).setAttribute("aria-selected",S.tab===t);});
+document.getElementById("t-quiz").innerHTML="Loppukoe"+(alldone()?"":' <span class="tag chk">lukittu</span>');}
+function render(){
+vg.hidden=S.tab!=="groups";vc.hidden=S.tab!=="cards";vq.hidden=S.tab!=="quiz";
+if(S.tab==="groups")renderGroups();else if(S.tab==="cards")renderCards();else renderQuiz();
+updateTabs();
+var b=document.getElementById("nextbtn");if(b)b.focus({preventScroll:true});
+var bn=document.getElementById("banner");if(bn)bn.scrollIntoView({block:"nearest"});}
+function show(tab){S.tab=tab;S.cr=false;if(tab==="cards"&&!S.q&&S.queue.length===0)build();render();}
+function activeQ(){if(S.tab==="cards")return S.q;if(S.tab==="quiz"&&Z.started&&!Z.done)return Z.q;return null;}
+
+function resolve(q,i){
+if(q.phase!=="ask")return;
+q.pick=i;q.ok=i>=0&&q.opts[i].n===q.l.n;q.phase="result";
+if(q.ok){if(S.tab==="cards"){streak[q.l.n]=(streak[q.l.n]||0)+1;if(streak[q.l.n]>=NEED)known[q.l.n]=1;}if(S.tab==="quiz")Z.score++;}
+else{miss[q.l.n]=(miss[q.l.n]||0)+1;if(S.tab==="cards")streak[q.l.n]=0;if(S.tab==="quiz")Z.wrong.push(q.l);}
+sv();render();}
+function advance(){
+if(S.tab==="cards"){var c=S.queue.shift();if(!known[c.n])S.queue.splice(Math.min(S.q.ok?5:3,S.queue.length),0,c);prepare();}
+else{Z.i++;if(Z.i>=Z.items.length){Z.done=true;if(Z.kind==="all"&&(!best.v||Z.score>best.v)){best.v=Z.score;sv();}}else Z.q=makeQ(Z.items[Z.i].l,Z.items[Z.i].mode);}
+render();window.scrollTo(0,0);}
+function act(a,el){
+var q=activeQ();
+if(a==="pick"&&q)resolve(q,+el.dataset.i);
+else if(a==="reveal"&&q)resolve(q,-1);
+else if(a==="hint"&&q){q.hint=!q.hint;render();}
+else if(a==="options"&&q){q.stage="ask";render();}
+else if(a==="think"){S.think=!S.think;prepare();render();}
+else if(a==="next"&&q)advance();
+else if(a==="mode"){S.mode=el.dataset.m;prepare();render();}
+else if(a==="practice"){S.group=el.dataset.g;build();show("cards");window.scrollTo(0,0);}
+else if(a==="qstart")startQuiz(el.dataset.k);
+else if(a==="resetall"){if(!S.cr){S.cr=true;render();return;}known={};miss={};streak={};S.cr=false;Z={started:false,done:false,kind:"all",items:[],i:0,score:0,wrong:[],q:null};sv();build();render();}}
+
+document.addEventListener("click",function(e){
+var t=e.target.closest("[data-act],[data-tab]");if(!t)return;
+if(t.getAttribute("aria-disabled")==="true")return;
+if(t.dataset.tab){show(t.dataset.tab);return;}
+act(t.dataset.act,t);});
+document.addEventListener("change",function(e){if(e.target.id==="gsel"){S.group=e.target.value;build();render();}else if(e.target.id==="own"){var v=e.target.value.trim(),n=e.target.dataset.n;if(v)own[n]=v;else delete own[n];sv();}});
+document.addEventListener("keydown",function(e){
+var tag=e.target.tagName;
+if(tag==="SELECT"||tag==="INPUT"||tag==="TEXTAREA"||e.metaKey||e.ctrlKey||e.altKey)return;
+var q=activeQ();if(!q)return;
+if(tag==="BUTTON"&&(e.key===" "||e.key==="Enter"))return;
+if(q.phase==="ask"){
+if(q.stage==="think"){if(e.key===" "||e.key==="Enter"){e.preventDefault();act("options");}return;}
+var d=parseInt(e.key,10);
+if(d>=1&&d<=q.opts.length){e.preventDefault();act("pick",{dataset:{i:d-1}});}
+else if(e.key===" "||e.key==="Enter"){e.preventDefault();act("reveal");}
+}else if(e.key===" "||e.key==="Enter"||e.key==="ArrowRight"){e.preventDefault();act("next");}});
+
+build();render();
+</script>
+</body>
+</html>
